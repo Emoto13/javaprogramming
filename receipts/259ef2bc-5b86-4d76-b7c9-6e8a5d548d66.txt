@@ -1,0 +1,5 @@
+Receipt:259ef2bc-5b86-4d76-b7c9-6e8a5d548d66
+Time: 2022-05-01T13:30:27.678813
+Cashier: 81c8aa67-ed3c-4d66-b99e-29a0af654d2d, Worker 0
+Products: (id, name, quantity) 
+Product: 55589818-f72c-4d82-aa05-44fdb277b2bf, Product 0, 1.00, Quantity: 1, Total: 1.00
