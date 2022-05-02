@@ -35,4 +35,8 @@ class Client {
     public UUID getID() {
         return this.id;
     }
+
+    public String toString() {
+        return String.format("Client %s", this.id);
+    }
 }

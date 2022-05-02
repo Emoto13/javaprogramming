@@ -119,48 +119,45 @@ public class CommandHandler {
             }
 
             String[] line = input.split(", ");
-            switch (line[0]) {
-                case "create-client": 
+            if (line.length == 0) { 
+                continue;
+            }
+
+            String command = line[0];
+            if (command.equals("create-client")) {
                     Client client = this.readClient();
                     this.clients.put(client.getID(), client);
-                    continue;
-                case "client-buy":
-                    if (line.length < 4) {
-                        System.out.println("Not enough arguments for the command client-buy");
-                        continue;
-                    }
-
-                    try  {
-                        System.out.println(line[2]);
-                        Product product = this.shop.getInventory().getProductByName(line[2]);
-                        int quantity = Integer.parseInt(line[3]);
-                        this.addToCart(UUID.fromString(line[1]), product, quantity);
-                        System.out.printf("Added to cart: %s %d\n", product.getName(), quantity);
-                    } catch (Exception e) {
-                        System.out.printf("Something went wrong: %s\n", e);
-                    }
-                    continue;
-                case "show-inventory":
-                    System.out.println(this.shop.getInventory());
-                    continue;
-                case "client-checkout":
-                    if (line.length < 2) throw new IllegalArgumentException("Not enough arguments for the command client-checkout");
-                    CashRegistry registry = this.shop.getAvaialbleCashRegistry();
-                    try {
-                        UUID id = UUID.fromString(line[1]);
-                        if (!this.clients.containsKey(id)) throw new IllegalArgumentException("No such client");
-                
-                        Client customer = this.clients.get(id);
-                        registry.enqueueCustomer(customer);
-                    } catch (Exception e) {
-                        System.err.println("Couldn't serve customer" + e);
-                    }
+            } else if (command.equals("client-buy")) {
+                if (line.length < 4) {
+                    System.out.println("Not enough arguments for the command client-buy");
                     continue;
                 }
 
+                try  {
+                    System.out.println(line[2]);
+                    Product product = this.shop.getInventory().getProductByName(line[2]);
+                    int quantity = Integer.parseInt(line[3]);
+                    this.addToCart(UUID.fromString(line[1]), product, quantity);
+                    System.out.printf("Added to cart: %s %d\n", product.getName(), quantity);
+                } catch (Exception e) {
+                    System.out.printf("Something went wrong: %s\n", e);
+                }
+            } else if (command.equals("show-inventory")) {
+                System.out.print(this.shop.getInventory());
+            } else if (command.equals("client-checkout")) {         
+                if (line.length < 2) throw new IllegalArgumentException("Not enough arguments for the command client-checkout");
+
+                CashRegistry registry = this.shop.getAvaialbleCashRegistry();
+                try {
+                    UUID id = UUID.fromString(line[1]);
+                    if (!this.clients.containsKey(id)) throw new IllegalArgumentException("No such client");
+                
+                    Client customer = this.clients.get(id);
+                    registry.enqueueCustomer(customer);
+                } catch (Exception e) {
+                    System.err.println("Couldn't serve customer" + e);
+                }
+            }
         }
-
     }
-
-
 }

@@ -23,7 +23,7 @@ class Receipt {
     }
 
     public void save() {
-        String filename = new String(String.format("receipts/%s.txt", this.id.toString()));
+        String filename = new String(String.format("receipts/%s.txt", this.id));
         try {
             File file = new File(filename);
             file.createNewFile();
@@ -44,9 +44,9 @@ class Receipt {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("Receipt:%s\n", this.id.toString()));
-        sb.append(String.format("Time: %s\n", this.time.toString()));
-        sb.append(String.format("Cashier: %s, %s\n", this.cashier.getID().toString(), this.cashier.getName()));
+        sb.append(String.format("Receipt: %s\n", this.id));
+        sb.append(String.format("Time: %s\n", this.time));
+        sb.append(String.format("Cashier: %s, %s\n", this.cashier.getID(), this.cashier.getName()));
         sb.append("Products: (id, name, quantity) \n");
         for (Map.Entry<Product, Integer> entry : this.products.getProducts().entrySet()) {  
             double total = entry.getValue() * entry.getKey().getSalePrice();

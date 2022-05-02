@@ -1,21 +1,25 @@
 package src;
 
+import java.util.UUID;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 
 
 class CashRegistry extends Thread {
+    private UUID id;
     private Cashier cashier;
     private ReceiptManager receiptManager;
     private BlockingQueue<Client> queue;
 
 
     public CashRegistry(ReceiptManager receiptManager) {
+        this.id = UUID.randomUUID();
         this.receiptManager = receiptManager;
         this.queue = new LinkedBlockingDeque<Client>();
     }
 
     public CashRegistry(ReceiptManager receiptManager, Cashier cashier) {
+        this.id = UUID.randomUUID();
         this.receiptManager = receiptManager;
         this.cashier = cashier;
     }
@@ -48,7 +52,7 @@ class CashRegistry extends Thread {
         Receipt receipt = this.receiptManager.createReceipt(this.cashier, client.getCart().getProductRegistry());
         this.receiptManager.saveReceipt(receipt);
 
-        System.out.printf("Customer %s checked-out\n", client);
+        System.out.printf("Customer %s checked-out \n", client);
         return client.getCart().getProductRegistry();
     }
 
@@ -77,5 +81,9 @@ class CashRegistry extends Thread {
                 }
             }
         }
+    }
+
+    public String toString() {
+        return String.format("Cash registry %s with cashier %s", this.id, this.cashier);
     }
 }

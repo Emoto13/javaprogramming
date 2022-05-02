@@ -1,12 +1,9 @@
 package src;
 
-import java.time.LocalDate;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-
 class Main {
+    
     public static void main(String[] args) throws Exception {
-        // TODO: Create CLI, make everything concurrent and write tests
+        // TODO: Refactor CLI and write tests
         ReceiptManager receiptManager = ReceiptManager.getInstance();
         ShopBuilder shopBuilder = new ShopBuilder(receiptManager);
         CommandHandler commandHandler = new CommandHandler(shopBuilder);

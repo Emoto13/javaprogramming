@@ -55,6 +55,6 @@ class Product {
     }
 
     public String toString() {
-        return String.format("%s, %s, %.2f", this.id.toString(), this.name, this.getSalePrice());
+        return String.format("%s, %s, %.2f", this.id, this.name, this.getSalePrice());
     }
 }

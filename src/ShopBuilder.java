@@ -42,7 +42,6 @@ public class ShopBuilder {
             ProductType type = i % 2 == 0 ? ProductType.FOOD : ProductType.NONFOOD;
             double price = (double) ThreadLocalRandom.current().nextInt(1, 11);
             LocalDate expirationDate = LocalDate.now().plusDays(i+1);
-            System.out.println(expirationDate);
             Product product = new Product(String.format("Product%d", i), price, type, expirationDate);
             int quantity = ThreadLocalRandom.current().nextInt(1, 6);
             

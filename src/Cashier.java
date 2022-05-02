@@ -30,4 +30,8 @@ class Cashier {
     public double getSalary() {
         return this.salary;
     }
+
+    public String toString() {
+        return String.format("Cashier (id, name): %s, %s", this.id, this.name);
+    }
 }
