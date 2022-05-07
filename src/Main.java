@@ -3,10 +3,8 @@ package src;
 class Main {
     
     public static void main(String[] args) throws Exception {
-        // TODO: Refactor CLI and write tests
         ReceiptManager receiptManager = ReceiptManager.getInstance();
         ShopBuilder shopBuilder = new ShopBuilder(receiptManager);
-        
         
         CommandReader commandReader = new CommandReader(shopBuilder);
         CommandHandler commandHandler = new CommandHandler(commandReader);

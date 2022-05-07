@@ -3,6 +3,7 @@ package src;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.UUID;
 
 class Shop {
     private List<Cashier> cashiers;
@@ -89,4 +90,34 @@ class Shop {
     public int getReceiptCount() {
         return this.receiptManager.getReceiptCount();
     }
+
+
+    public CashRegistry freeCashRegistry(UUID id) throws IllegalArgumentException {
+        for (CashRegistry registry: this.cashRegistries) {
+            if (registry.getID().equals(id)) {
+                registry.setCashier(null);
+                return registry;
+            }
+        }
+        throw new IllegalArgumentException("No such registry");
+    }
+
+    public void restartInactiveRegistries() {
+        for (CashRegistry registry: this.cashRegistries) {
+            if (!registry.hasCashier()) {
+                Cashier cashier = this.getFreeCashier();
+                if (cashier != null) {
+                    registry.setCashier(cashier);
+                }
+            }
+        }
+    }
+
+    private Cashier getFreeCashier() {
+        for (Cashier cashier: this.cashiers) {
+            if (!cashier.isBusy()) return cashier;
+        }
+        return null;
+    }
+
 }

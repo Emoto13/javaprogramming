@@ -24,12 +24,24 @@ class CashRegistry extends Thread {
         this.cashier = cashier;
     }
 
+    public UUID getID() {
+        return this.id;
+    }
+
     public synchronized void setCashier(Cashier cashier) {
+        if (cashier == null) { 
+            this.cashier.setBusy(false);
+            this.cashier = null;
+            System.out.println("Cash registry emptied");
+            return;
+        }
+
         if (this.cashier != null) {
             return;
         }
 
         this.cashier = cashier;
+        this.cashier.setBusy(true);
         System.out.printf("Cashier set %s\n", this.cashier);
     }
 

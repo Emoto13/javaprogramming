@@ -2,16 +2,20 @@ package src;
 
 
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 
 class Cashier {
     private final UUID id;
     private final String name;
-    private double salary;    
+    private double salary;
+    private final AtomicBoolean isBusy;
 
     public Cashier(String name, double salary) {
         this.id = UUID.randomUUID();
         this.name = name;
         this.salary = salary;
+        this.isBusy = new AtomicBoolean(false);
     }
 
     public double getBill(Cart cart) throws Exception {
@@ -30,6 +34,14 @@ class Cashier {
     public double getSalary() {
         return this.salary;
     }
+
+    public boolean isBusy() {
+        return this.isBusy.get();
+    }
+
+    public synchronized void setBusy(boolean busy) {
+        this.isBusy.set(busy);
+    } 
 
     public String toString() {
         return String.format("Cashier (id, name): %s, %s", this.id, this.name);

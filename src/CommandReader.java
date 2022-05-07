@@ -24,8 +24,11 @@ public class CommandReader {
         while (amount <= 0) {
             try {
                 amount = Integer.parseInt(this.reader.readLine());
-            } catch (Exception ex) { System.out.println("Please enter a valid quantity"); }
-            if (amount <= 0) System.out.println("Please enter a valid quantity");
+            } catch (Exception ex) { 
+                System.out.print("Please enter a valid quantity: "); 
+                continue;
+            }
+            if (amount <= 0) System.out.print("Please enter a valid quantity: ");
         }
         return amount;
     }
@@ -35,8 +38,11 @@ public class CommandReader {
         while (amount <= 0) {
             try {
                 amount = Double.parseDouble(this.reader.readLine());
-            } catch (Exception ex) { System.out.println("Please enter a valid quantity"); }
-            if (amount <= 0) System.out.println("Please enter a valid quantity");
+            } catch (Exception ex) {
+                System.out.print("Please enter a valid quantity: "); 
+                continue;
+            }
+            if (amount <= 0) System.out.print("Please enter a valid quantity: ");
         }
         return amount;
     }
@@ -48,13 +54,14 @@ public class CommandReader {
                 id = UUID.fromString(this.reader.readLine());
                 return id;
             } catch (Exception ex) { 
-                System.out.println("Please enter a valid id"); 
+                System.out.print("Please enter a valid id: "); 
             }
         }
     }
 
 
     public List<Cashier> readCashiers() {
+        System.out.print("Enter number of cashiers: ");
         int amount = this.readInt();
         List<Cashier> cashiers = this.shopBuilder.createCashiers(amount);
         System.out.printf("Successfully created %d cashiers\n", amount);
@@ -62,6 +69,7 @@ public class CommandReader {
     }
 
     public List<CashRegistry> readCashRegistries() {
+        System.out.print("Enter number of cash registries: ");
         int amount = this.readInt();
         System.out.printf("Successfully created %d cashier registries\n", amount);
         List<CashRegistry> cashRegistries = this.shopBuilder.createCashRegistries(amount);
@@ -82,6 +90,7 @@ public class CommandReader {
     }
 
     public Client readClient() {
+        System.out.print("Enter client's amout of money: ");
         double amount = this.readDouble();
         Client client = this.shopBuilder.createClient(amount);
         System.out.printf("Created client with ID: %s\n", client.getID());

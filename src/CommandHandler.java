@@ -65,6 +65,7 @@ public class CommandHandler {
                 }
             } else if (command.equals("client-checkout")) {         
                 try {
+                    System.out.print("Enter client's id: ");
                     UUID id = this.commandReader.readUUID();
                     Client customer = this.clients.get(id);
                     CashRegistry registry = this.shop.getAvaialbleCashRegistry();
@@ -84,6 +85,16 @@ public class CommandHandler {
                 } catch (Exception e) {
                     System.out.printf("Something went wrong: %s\n", e);
                 }
+            } else if (command.equals("free-cash-registry")) {
+                try {
+                    System.out.print("Enter registry's id: ");
+                    UUID id = this.commandReader.readUUID();
+                    this.shop.freeCashRegistry(id);
+                } catch (Exception e) {
+                    System.err.println("Couldn't free registry: " + e.getMessage());
+                }
+            } else if (command.equals("restart-empty-registries")) {
+                this.shop.restartInactiveRegistries();
             } else if (command.equals("show-inventory")) {
                 System.out.print(this.shop.getInventory());
             } else if (command.equals("show-sold")) {
@@ -101,7 +112,7 @@ public class CommandHandler {
                     System.out.println(c);
                 }
             } else if (command.equals("exit")) {
-                return;
+                System.exit(0);
             }
         }
     }
