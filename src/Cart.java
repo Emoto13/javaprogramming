@@ -17,14 +17,24 @@ class Cart {
         return true;
     }
 
-    public boolean add(Product product, int quantity)  {
+    public void add(Product product, int quantity)  {
         if (this.products.contains(product)) {
             this.products.update(product, quantity);
         } else {
             this.products.add(product, quantity);
         }
+    }
 
-        return true;
+    public void remove(Product product, int quantity) throws IllegalArgumentException {
+        if (!this.products.contains(product)) {
+            throw new IllegalArgumentException("No such product");
+        } 
+
+        if (this.products.get(product) < quantity) {
+            throw new IllegalArgumentException("Not enough product in the cart to remove");
+        }
+
+        this.products.update(product, -quantity);
     }
 
     public double calculatePrice() {

@@ -31,4 +31,8 @@ public class ReceiptManager {
     public int getReceiptCount() {
         return this.receipts.size();
     }
+
+    public List<Receipt> getReceipts() {
+        return this.receipts;
+    }
 }

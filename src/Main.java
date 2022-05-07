@@ -6,16 +6,20 @@ class Main {
         // TODO: Refactor CLI and write tests
         ReceiptManager receiptManager = ReceiptManager.getInstance();
         ShopBuilder shopBuilder = new ShopBuilder(receiptManager);
-        CommandHandler commandHandler = new CommandHandler(shopBuilder);
+        
+        
+        CommandReader commandReader = new CommandReader(shopBuilder);
+        CommandHandler commandHandler = new CommandHandler(commandReader);
         Shop shop = new Shop(receiptManager);
-        shop.setCashiers(commandHandler.readCashiers());
-        shop.setCashRegistries(commandHandler.readCashRegistries());
+    
+        shop.setCashiers(commandReader.readCashiers());
+        shop.setCashRegistries(commandReader.readCashRegistries());
+
         shop.assignCashiersToRegistries();
         shop.startCashRegistries();
-
         shop.setInventory(shopBuilder.createRegistry());
-        commandHandler.setShop(shop);
 
+        commandHandler.setShop(shop);
         commandHandler.run();
     }
 }

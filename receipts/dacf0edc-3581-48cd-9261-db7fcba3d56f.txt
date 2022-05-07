@@ -1,0 +1,5 @@
+Receipt: dacf0edc-3581-48cd-9261-db7fcba3d56f
+Time: 2022-05-06T14:11:59.474495
+Cashier: 871c8a83-7cb6-4e8c-9120-dda89895eef0, Worker 0
+Products: (id, name, quantity) 
+Product: fa7f0ea8-4754-4981-81e3-f7075aa759e2, Product2, 8.30, Quantity: 1, Total: 8.30

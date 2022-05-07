@@ -11,8 +11,12 @@ public class ProductRegistry {
         this.productsToQuantity = new HashMap<Product, Integer>();
     }
 
-    public void add(Product product, Integer quantity) {
+    public void remove(Product product, Integer quantity) {
         productsToQuantity.put(product, quantity);
+    }
+
+    public Integer get(Product product) {
+        return this.productsToQuantity.get(product);
     }
 
     public boolean contains(Product product) {
@@ -75,6 +79,14 @@ public class ProductRegistry {
         }
     
         return sb.toString();
+    }
+
+    public void add(Product product, Integer quantity) {
+        if (!this.productsToQuantity.containsKey(product)) {
+            this.productsToQuantity.put(product, 0);
+        }
+
+        this.productsToQuantity.put(product, this.productsToQuantity.get(product) + quantity);
     }
 
     public void subtract(ProductRegistry other) {

@@ -38,8 +38,6 @@ class Receipt {
         } catch (IOException exception) {
             System.err.println("Failed to write receipt to file" + exception);
         }
-
-  
     }
 
     public String toString() {

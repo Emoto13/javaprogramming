@@ -30,6 +30,18 @@ class Shop {
         return this.soldItems.getValue();
     }
 
+    public List<CashRegistry> getCashRegistries() {
+        return this.cashRegistries;
+    }
+
+    public ProductRegistry getSoldItems() {
+        return this.soldItems;
+    }
+
+    public ProductRegistry getInventory() {
+        return this.inventory;
+    }
+
     public void setInventory(ProductRegistry inventory) {
         this.inventory = inventory;
     }
@@ -52,10 +64,6 @@ class Shop {
         
     }
 
-    public ProductRegistry getInventory() {
-        return this.inventory;
-    }
-
     public boolean hasEnoughOfProduct(Product product, int quantity) {
         if (!this.inventory.contains(product)) return false;
         return this.inventory.getQuantity(product) >= quantity; 
@@ -75,5 +83,12 @@ class Shop {
             }
         }
     }
+    
+    public List<Receipt> getReceipts() {
+        return this.receiptManager.getReceipts();
+    }
 
+    public int getReceiptCount() {
+        return this.receiptManager.getReceiptCount();
+    }
 }

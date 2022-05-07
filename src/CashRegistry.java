@@ -52,7 +52,7 @@ class CashRegistry extends Thread {
         Receipt receipt = this.receiptManager.createReceipt(this.cashier, client.getCart().getProductRegistry());
         this.receiptManager.saveReceipt(receipt);
 
-        System.out.printf("Customer %s checked-out \n", client);
+        System.out.printf("\nCustomer %s checked-out \n", client);
         return client.getCart().getProductRegistry();
     }
 

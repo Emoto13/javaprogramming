@@ -25,6 +25,10 @@ class Client {
         this.cart.add(product, quantity);
     }
 
+    public void removeFromCart(Product product, int quantity) {
+        this.cart.remove(product, quantity);
+    }
+
     public double getMoney() { return this.money; }
 
     public void pay(double amount) throws IllegalArgumentException {
