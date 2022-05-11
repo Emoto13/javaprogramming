@@ -3,13 +3,6 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import src.main.java.CashRegistry;
-import src.main.java.Cashier;
-import src.main.java.ReceiptManager;
-import src.main.java.Client;
-import src.main.java.Product;
-import src.main.java.ProductType;
-
 public class TestCashRegistry {
     @Test
     public void testClientCheckoutsCorrectly() {
