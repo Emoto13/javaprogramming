@@ -23,13 +23,13 @@ class Shop {
         this.inventory = new ProductRegistry();
     }
 
-    public double getSales() {
+    public synchronized double getSales() {
         double profit = 0.0;
         for (CashRegistry registry: this.cashRegistries) profit += registry.getProfit();
         return profit;
     }
 
-    public double getDeliveryExpenses() {
+    public synchronized double getDeliveryExpenses() {
         double expenses = 0.0;
         for (Map.Entry<Product, Integer> productToQuantity : this.inventory.getProducts().entrySet()) {
             expenses += productToQuantity.getKey().getDeliveryPrice() * productToQuantity.getValue();
@@ -40,7 +40,7 @@ class Shop {
         return expenses;
     }
 
-    public double getSalaryExpenses() {
+    public synchronized double getSalaryExpenses() {
         double expenses = 0.0;
         for (Cashier cashier : this.cashiers) expenses += cashier.getSalary();
         return expenses;
