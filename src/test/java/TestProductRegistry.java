@@ -7,7 +7,7 @@ public class TestProductRegistry {
     @Test
     public void testUpdate() {
         ProductRegistry registry = new ProductRegistry();
-        Product product = new Product("name", 2.0, ProductType.FOOD, LocalDate.now());
+        Product product = new Product("name", 2.0, ProductType.FOOD, LocalDate.now().plusDays(1));
         registry.add(product, 0);
 
         String expectedMessage = "Not enough quantity in registry";
@@ -26,7 +26,7 @@ public class TestProductRegistry {
         ProductRegistry registry1 = new ProductRegistry();
         ProductRegistry registry2 = new ProductRegistry();
 
-        Product product = new Product("name", 2.0, ProductType.FOOD, LocalDate.now());
+        Product product = new Product("name", 2.0, ProductType.FOOD, LocalDate.now().plusDays(1));
         registry1.add(product, 1);
         registry2.add(product, 1);
         registry1.subtract(registry2);
@@ -38,7 +38,7 @@ public class TestProductRegistry {
     @Test
     public void testAdd() {
         ProductRegistry registry = new ProductRegistry();
-        Product product = new Product("name", 2.0, ProductType.FOOD, LocalDate.now());
+        Product product = new Product("name", 2.0, ProductType.FOOD, LocalDate.now().plusDays(1));
 
         registry.add(product, 1);
         assertEquals(1, (int) registry.get(product));

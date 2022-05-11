@@ -14,7 +14,7 @@ public class TestClient {
     @Test
     public void testClientCart() {
         Client client = new Client(10);
-        Product product = new Product("name", 2.0, ProductType.FOOD, LocalDate.now());
+        Product product = new Product("name", 2.0, ProductType.FOOD, LocalDate.now().plusDays(1));
         client.addToCart(product, 1);
         assertEquals((int) client.getCart().getProductRegistry().get(product), 1);
     
