@@ -72,11 +72,11 @@ public class CashRegistry extends Thread {
         return client.getCart().getProductRegistry();
     }
 
-    public synchronized void enqueueCustomer(Client client) {
+    public void enqueueCustomer(Client client) {
         this.queue.add(client);
     }
 
-    public synchronized void dequeueCustomer() {
+    public void dequeueCustomer() {
         this.queue.remove();
     }
 

@@ -36,7 +36,7 @@ public class Cashier {
         return this.isBusy.get();
     }
 
-    public synchronized void setBusy(boolean busy) {
+    public void setBusy(boolean busy) {
         this.isBusy.set(busy);
     } 
 
