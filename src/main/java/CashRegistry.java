@@ -8,22 +8,35 @@ public class CashRegistry extends Thread {
     private Cashier cashier;
     private ReceiptManager receiptManager;
     private BlockingQueue<Client> queue;
-
+    private double profit;
+    private ProductRegistry soldItems;
 
     public CashRegistry(ReceiptManager receiptManager) {
         this.id = UUID.randomUUID();
         this.receiptManager = receiptManager;
         this.queue = new LinkedBlockingDeque<Client>();
+        this.soldItems = new ProductRegistry();
+        this.profit = 0.0;
     }
 
     public CashRegistry(ReceiptManager receiptManager, Cashier cashier) {
         this.id = UUID.randomUUID();
         this.receiptManager = receiptManager;
         this.cashier = cashier;
+        this.soldItems = new ProductRegistry();
+        this.profit = 0.0;
     }
 
     public UUID getID() {
         return this.id;
+    }
+
+    public double getProfit() {
+        return this.profit;
+    }
+
+    public ProductRegistry getSoldItems() {
+        return this.soldItems;
     }
 
     public synchronized void setCashier(Cashier cashier) throws IllegalArgumentException {
@@ -65,6 +78,7 @@ public class CashRegistry extends Thread {
         }
         
         client.pay(bill);
+        this.profit += bill;
         Receipt receipt = this.receiptManager.createReceipt(this.cashier, client.getCart().getProductRegistry());
         this.receiptManager.saveReceipt(receipt);
 
@@ -89,7 +103,8 @@ public class CashRegistry extends Thread {
                 }
     
                 try {
-                    this.checkoutClient();
+                    ProductRegistry sold = this.checkoutClient();
+                    this.soldItems.addRegistry(sold);
                 } catch (Exception  e) {
                     System.err.println("Something went wrong when checkouting client." + e);
                 } finally {

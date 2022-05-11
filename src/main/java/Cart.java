@@ -46,4 +46,8 @@ public class Cart {
     public ProductRegistry getProductRegistry() {
         return this.products;
     }
+
+    public String toString() {
+        return String.format("Cart:\n%s", this.products);
+    }
 }

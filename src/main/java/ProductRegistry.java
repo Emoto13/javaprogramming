@@ -75,6 +75,12 @@ public class ProductRegistry {
         this.productsToQuantity.put(product, this.productsToQuantity.get(product) + quantity);
     }
 
+    public void addRegistry(ProductRegistry other) {
+        for (Map.Entry<Product, Integer> productToQuantity : other.getProducts().entrySet()) {
+            this.add(productToQuantity.getKey(), productToQuantity.getValue());
+        }
+    }
+
     public void subtract(ProductRegistry other) {
         for (Map.Entry<Product, Integer> productToQuantity : this.productsToQuantity.entrySet()) {
             Product product = productToQuantity.getKey();
@@ -88,7 +94,7 @@ public class ProductRegistry {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Product catalog\n");
+        sb.append("Products\n");
         for (Map.Entry<Product, Integer> productToQuantity : this.productsToQuantity.entrySet()) {
             sb.append(String.format("Product: %s Quantity: %d\n", productToQuantity.getKey(), productToQuantity.getValue()));
         }

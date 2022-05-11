@@ -1,5 +1,6 @@
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.UUID;
 
@@ -7,32 +8,56 @@ class Shop {
     private List<Cashier> cashiers;
     private List<CashRegistry> cashRegistries;
     private ProductRegistry inventory;
-    private ProductRegistry soldItems;
     private ReceiptManager receiptManager;
+
+    private Cashier getFreeCashier() {
+        for (Cashier cashier: this.cashiers) {
+            if (!cashier.isBusy()) return cashier;
+        }
+        return null;
+    }
 
     public Shop(ReceiptManager receiptManager) {
         this.receiptManager = receiptManager;    
         this.cashiers = new ArrayList<Cashier>();
         this.inventory = new ProductRegistry();
-        this.soldItems = new ProductRegistry();
-    }
-
-    public double getSalaryExpenses() {
-        double expense = 0.0;
-        for (Cashier cashier : cashiers) expense += cashier.getSalary();
-        return expense;
     }
 
     public double getSales() {
-        return this.soldItems.getValue();
+        double profit = 0.0;
+        for (CashRegistry registry: this.cashRegistries) profit += registry.getProfit();
+        return profit;
     }
 
+    public double getDeliveryExpenses() {
+        double expenses = 0.0;
+        for (Map.Entry<Product, Integer> productToQuantity : this.inventory.getProducts().entrySet()) {
+            expenses += productToQuantity.getKey().getDeliveryPrice() * productToQuantity.getValue();
+        }
+        for (Map.Entry<Product, Integer> productToQuantity : this.getSoldItems().getProducts().entrySet()) {
+            expenses += productToQuantity.getKey().getDeliveryPrice() * productToQuantity.getValue();
+        }
+        return expenses;
+    }
+
+    public double getSalaryExpenses() {
+        double expenses = 0.0;
+        for (Cashier cashier : this.cashiers) expenses += cashier.getSalary();
+        return expenses;
+    }
+
+    public double getExpenses() {
+        return this.getSalaryExpenses() + this.getDeliveryExpenses();
+    }
+ 
     public List<CashRegistry> getCashRegistries() {
         return this.cashRegistries;
     }
 
     public ProductRegistry getSoldItems() {
-        return this.soldItems;
+        ProductRegistry soldItems = new ProductRegistry();
+        for (CashRegistry registry: this.cashRegistries) soldItems.addRegistry(registry.getSoldItems());
+        return soldItems;
     }
 
     public ProductRegistry getInventory() {
@@ -58,7 +83,6 @@ class Shop {
             r.setCashier(this.cashiers.get(i));
             i++;
         }
-        
     }
 
     public boolean hasEnoughOfProduct(Product product, int quantity) {
@@ -112,11 +136,6 @@ class Shop {
         }
     }
 
-    private Cashier getFreeCashier() {
-        for (Cashier cashier: this.cashiers) {
-            if (!cashier.isBusy()) return cashier;
-        }
-        return null;
-    }
+
 
 }

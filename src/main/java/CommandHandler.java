@@ -78,7 +78,7 @@ public class CommandHandler {
                     Product product = this.shop.getInventory().getProductByName(purchaseInformation.getProductName());
     
                     this.removeFromCart(purchaseInformation.getClientID(), product, purchaseInformation.getQuantity());
-                    System.out.printf("Added to cart: %s %d\n", purchaseInformation.getProductName(), purchaseInformation.getQuantity());
+                    System.out.printf("Removed from cart: %s %d\n", purchaseInformation.getProductName(), purchaseInformation.getQuantity());
     
                 } catch (Exception e) {
                     System.out.printf("Something went wrong: %s\n", e);
@@ -103,12 +103,47 @@ public class CommandHandler {
                 }
             }  else if (command.equals("show-sales")) {         
                 System.out.println(this.shop.getSales());
+            } else if (command.equals("show-expenses")) {         
+                System.out.println(this.shop.getExpenses());
+            } else if (command.equals("show-salary-expenses")) {         
+                System.out.println(this.shop.getSalaryExpenses());
+            } else if (command.equals("show-delivery-expenses")) {         
+                System.out.println(this.shop.getDeliveryExpenses());
+            } else if (command.equals("show-cart")) { 
+                try {
+                    System.out.print("Enter client's id: ");
+                    UUID id = this.commandReader.readUUID();
+                    Client customer = this.clients.get(id);
+                    System.out.println(customer.getCart());
+                } catch (Exception e) {
+                    System.err.println("Couldn't show customer's cart: " + e);
+                }
             } else if (command.equals("show-receipts")) {      
                 System.out.println(this.shop.getReceiptCount());
             } else if (command.equals("show-receipts-detailed")) { 
                 for (Receipt c: this.shop.getReceipts()) {
                     System.out.println(c);
                 }
+            } else if (command.equals("help")) {
+                StringBuilder sb = new StringBuilder()
+                .append("Commands:\n")
+                .append("create-client\n")
+                .append("client-buy\n")
+                .append("remove-from-cart\n")
+                .append("free-cash-registry\n")
+                .append("restart-empty-registries\n")
+                .append("show-expenses\n")
+                .append("show-salary-expenses\n")
+                .append("show-delivery-expenses\n")
+                .append("show-cart\n")
+                .append("show-inventory\n")
+                .append("show-sold\n")
+                .append("show-cash-registries\n")
+                .append("show-sales-profit\n")
+                .append("show-receipts\n")
+                .append("show-receipts-detailed\n")
+                .append("exit\n");
+                System.out.println(sb.toString());
             } else if (command.equals("exit")) {
                 System.exit(0);
             }
