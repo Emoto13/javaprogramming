@@ -4,25 +4,24 @@ import java.util.HashMap;
 public class ProductRegistry {
     private Map<Product, Integer> productsToQuantity;
 
-
     public ProductRegistry() {
         this.productsToQuantity = new HashMap<Product, Integer>();
     }
 
-    public void remove(Product product, Integer quantity) {
+    public synchronized void remove(Product product, Integer quantity) {
         productsToQuantity.put(product, quantity);
     }
 
-    public Integer get(Product product) {
+    public synchronized Integer get(Product product) {
         if (!this.productsToQuantity.containsKey(product)) return -1;
         return this.productsToQuantity.get(product);
     }
 
-    public boolean contains(Product product) {
+    public synchronized boolean contains(Product product) {
         return this.productsToQuantity.containsKey(product);
     }
 
-    public void update(Product product, Integer quantity) throws IllegalArgumentException {
+    public synchronized void update(Product product, Integer quantity) throws IllegalArgumentException {
         Integer available = this.productsToQuantity.get(product);
         if (quantity < 0 && available < Math.abs(quantity)) {
             throw new IllegalArgumentException("Not enough quantity in registry");
@@ -31,7 +30,7 @@ public class ProductRegistry {
         this.productsToQuantity.put(product, this.productsToQuantity.get(product) + quantity);
     }
 
-    public double getValue() {
+    public synchronized double getValue() {
         double price = 0;
 
         // iterate objects in cart to get total price
@@ -42,7 +41,7 @@ public class ProductRegistry {
         return price;
     }
 
-    public boolean containsExpired() {
+    public synchronized boolean containsExpired() {
         for (Map.Entry<Product, Integer> productToQuantity : this.productsToQuantity.entrySet()) {
             if (productToQuantity.getKey().isExpired()) {
                 System.out.println(productToQuantity.getKey());
@@ -53,11 +52,11 @@ public class ProductRegistry {
         return false;
     }
 
-    public Map<Product, Integer> getProducts() {
+    public synchronized Map<Product, Integer> getProducts() {
         return this.productsToQuantity;
     }
 
-    public Product getProductByName(String name)  throws Exception {
+    public synchronized Product getProductByName(String name)  throws Exception {
         for (Map.Entry<Product, Integer> entry : this.productsToQuantity.entrySet()) {
             if (entry.getKey().getName().equals(name)) {
                 return entry.getKey();
@@ -67,7 +66,11 @@ public class ProductRegistry {
         throw new IllegalStateException("no product with that name was found");
     }
 
-    public void add(Product product, Integer quantity) {
+    public synchronized void add(Product product, Integer quantity) {
+        if (product.isExpired()) {
+            throw new IllegalArgumentException("Cannot add expired product: ");
+        }
+
         if (!this.productsToQuantity.containsKey(product)) {
             this.productsToQuantity.put(product, 0);
         }
@@ -75,13 +78,16 @@ public class ProductRegistry {
         this.productsToQuantity.put(product, this.productsToQuantity.get(product) + quantity);
     }
 
-    public void addRegistry(ProductRegistry other) {
+    public synchronized void addRegistry(ProductRegistry other, boolean onlyNotExpired) {
         for (Map.Entry<Product, Integer> productToQuantity : other.getProducts().entrySet()) {
+            if (onlyNotExpired && productToQuantity.getKey().isExpired()) {
+                continue;
+            }
             this.add(productToQuantity.getKey(), productToQuantity.getValue());
         }
     }
 
-    public void subtract(ProductRegistry other) {
+    public synchronized void subtract(ProductRegistry other) {
         for (Map.Entry<Product, Integer> productToQuantity : this.productsToQuantity.entrySet()) {
             Product product = productToQuantity.getKey();
             if (other.contains(product)) {

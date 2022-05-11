@@ -104,7 +104,7 @@ public class CashRegistry extends Thread {
     
                 try {
                     ProductRegistry sold = this.checkoutClient();
-                    this.soldItems.addRegistry(sold);
+                    this.soldItems.addRegistry(sold, false);
                 } catch (Exception  e) {
                     System.err.println("Something went wrong when checkouting client." + e);
                 } finally {

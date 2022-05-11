@@ -56,16 +56,16 @@ class Shop {
 
     public ProductRegistry getSoldItems() {
         ProductRegistry soldItems = new ProductRegistry();
-        for (CashRegistry registry: this.cashRegistries) soldItems.addRegistry(registry.getSoldItems());
+        for (CashRegistry registry: this.cashRegistries) soldItems.addRegistry(registry.getSoldItems(), false);
         return soldItems;
     }
 
-    public ProductRegistry getInventory() {
+    public synchronized ProductRegistry getInventory() {
         return this.inventory;
     }
 
     public void setInventory(ProductRegistry inventory) {
-        this.inventory = inventory;
+        this.inventory.addRegistry(inventory, true);
     }
 
     public void setCashiers(List<Cashier> cashiers) {
