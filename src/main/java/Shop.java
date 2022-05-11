@@ -63,7 +63,7 @@ class Shop {
 
     public boolean hasEnoughOfProduct(Product product, int quantity) {
         if (!this.inventory.contains(product)) return false;
-        return this.inventory.getQuantity(product) >= quantity; 
+        return this.inventory.get(product) >= quantity; 
     }
 
     public synchronized void startCashRegistries() {
