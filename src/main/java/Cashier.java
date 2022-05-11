@@ -1,11 +1,8 @@
-package src.main.java;
-
-
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
-class Cashier {
+public class Cashier {
     private final UUID id;
     private final String name;
     private double salary;

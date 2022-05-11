@@ -1,7 +1,8 @@
-package src.main.java;
-
 import java.util.List;
 import java.util.ArrayList;
+import java.nio.file.Paths;
+import java.nio.file.Files;
+import java.io.IOException;
 
 public class ReceiptManager {
     private static ReceiptManager singleInstance = null;
@@ -24,6 +25,12 @@ public class ReceiptManager {
     }
 
     public void saveReceipt(Receipt receipt) {
+        try {
+            Files.createDirectories(Paths.get("./receipts/"));
+        } catch (IOException ioe) {
+            System.err.println("Couldn't create directory: "+ ioe);
+        }
+        
         receipt.save();
         this.receipts.add(receipt);
     }

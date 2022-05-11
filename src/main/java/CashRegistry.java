@@ -1,11 +1,9 @@
-package src.main.java;
-
 import java.util.UUID;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 
 
-class CashRegistry extends Thread {
+public class CashRegistry extends Thread {
     private UUID id;
     private Cashier cashier;
     private ReceiptManager receiptManager;
@@ -28,12 +26,9 @@ class CashRegistry extends Thread {
         return this.id;
     }
 
-    public synchronized void setCashier(Cashier cashier) {
-        if (cashier == null) { 
-            this.cashier.setBusy(false);
-            this.cashier = null;
-            System.out.println("Cash registry emptied");
-            return;
+    public synchronized void setCashier(Cashier cashier) throws IllegalArgumentException {
+        if (cashier == null) {
+            throw new IllegalArgumentException("Null cashier");
         }
 
         if (this.cashier != null) {
@@ -43,6 +38,15 @@ class CashRegistry extends Thread {
         this.cashier = cashier;
         this.cashier.setBusy(true);
         System.out.printf("Cashier set %s\n", this.cashier);
+    }
+
+    public synchronized void freeCashRegistry() {
+        if (this.cashier == null) {
+            return;
+        } 
+        this.cashier.setBusy(false);
+        this.cashier = null;
+        System.out.println("Cash registry emptied");
     }
 
     public synchronized boolean hasCashier() {
@@ -68,7 +72,7 @@ class CashRegistry extends Thread {
         return client.getCart().getProductRegistry();
     }
 
-    public synchronized void enqueueCustomer(Client client) throws Exception {
+    public synchronized void enqueueCustomer(Client client) {
         this.queue.add(client);
     }
 
@@ -79,11 +83,11 @@ class CashRegistry extends Thread {
     public void run() {
         System.out.println("Registry started working");
         while (true) {
-            if (this.cashier == null) {
-                continue;
-            }
-
             while (!this.queue.isEmpty()) {
+                if (this.cashier == null) {
+                    continue;
+                }
+    
                 try {
                     this.checkoutClient();
                 } catch (Exception  e) {

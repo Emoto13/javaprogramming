@@ -1,5 +1,3 @@
-package src.main.java;
-
 import java.util.UUID;
 
 public class Client {
@@ -17,10 +15,6 @@ public class Client {
         return this.cart; 
     }
 
-    public void addToCart(Product product) {
-        this.cart.add(product);
-    }
-
     public void addToCart(Product product, int quantity) {
         this.cart.add(product, quantity);
     }
@@ -32,7 +26,7 @@ public class Client {
     public double getMoney() { return this.money; }
 
     public void pay(double amount) throws IllegalArgumentException {
-        if (amount < 0 || amount > this.money) { throw new IllegalArgumentException("amount is negative or greater than available funds"); }
+        if (amount < 0 || amount > this.money) { throw new IllegalArgumentException("Amount is negative or greater than available funds"); }
         this.money -= amount;
     }
 

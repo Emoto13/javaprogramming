@@ -1,6 +1,4 @@
-package src.main.java;
-
-class Cart {
+public class Cart {
     private ProductRegistry products;
 
     public Cart() {

@@ -1,14 +1,7 @@
-package src.main.java;
-
 import java.time.LocalDate;
 import java.util.UUID;
 
-enum ProductType {
-    FOOD,
-    NONFOOD
-}
-
-class Product {
+public class Product {
     private final UUID id;
     private final String name;
     private final double deliveryPrice; // BigDecimal?

@@ -1,5 +1,3 @@
-package src.main.java;
-
 import java.util.List;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
@@ -67,6 +65,7 @@ class Shop {
         if (!this.inventory.contains(product)) return false;
         return this.inventory.getQuantity(product) >= quantity; 
     }
+
     public synchronized void startCashRegistries() {
         for (CashRegistry registry: this.cashRegistries) {
             Thread thread = new Thread(registry);

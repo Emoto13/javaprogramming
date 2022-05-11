@@ -1,8 +1,0 @@
-Receipt:60933148-6592-46d1-997a-66d71db35b82
-Time: 2022-05-01T09:32:07.878720
-Cashier: 90fc8f80-c4ac-4e18-bce2-8fa850b6a889, Ivan
-Products: (id, name, quantity) 
-Product: a50a4f80-1692-462b-afe9-e295f81f6bea, product4, 1.40, Quantity: 1, Total: 1.40
-Product: 72d66b01-cadd-42d8-8a06-3c0dfe548bfb, product1, 1.40, Quantity: 2, Total: 2.80
-Product: 8ca33373-d266-4759-9d0c-bddce0fabb67, product2, 1.40, Quantity: 1, Total: 1.40
-Product: 5a7bdc85-b4a4-468b-8236-2dd216d476f8, product3, 1.40, Quantity: 1, Total: 1.40
