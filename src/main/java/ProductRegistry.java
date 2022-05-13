@@ -8,8 +8,11 @@ public class ProductRegistry {
         this.productsToQuantity = new HashMap<Product, Integer>();
     }
 
-    public synchronized void remove(Product product, Integer quantity) {
-        productsToQuantity.put(product, quantity);
+    public synchronized void remove(Product product, Integer quantity) throws IllegalArgumentException {
+        if (!this.productsToQuantity.containsKey(product)) throw new IllegalArgumentException("No such product: ");
+        if (this.productsToQuantity.get(product) < quantity) throw new IllegalArgumentException("Not enough of given product: ");;
+
+        productsToQuantity.put(product, this.productsToQuantity.get(product) - quantity);
     }
 
     public synchronized Integer get(Product product) {
