@@ -7,12 +7,14 @@ class Main {
         CommandReader commandReader = new CommandReader(shopBuilder);
         CommandHandler commandHandler = new CommandHandler(commandReader);
         Shop shop = new Shop(receiptManager);
-    
+
+        commandReader.readShopSalePrice();
         shop.setCashiers(commandReader.readCashiers());
         shop.setCashRegistries(commandReader.readCashRegistries());
-
+        
         shop.assignCashiersToRegistries();
         shop.startCashRegistries();
+
         shop.setInventory(shopBuilder.createRegistry());
 
         commandHandler.setShop(shop);

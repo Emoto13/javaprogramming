@@ -114,6 +114,25 @@ public class CommandReader {
         }
     }
 
+    public void readShopSalePrice() {
+        System.out.print("Enter percentage for food products: ");
+        double foodDiscount = this.readDouble();
+        
+        System.out.print("Enter days remaining for food products overprice: ");
+        int foodDaysLeft = this.readInt();
+
+        System.out.print("Enter percentage for non-food products: ");
+        double nonFoodDiscount = this.readDouble();
+
+        System.out.print("Enter days remaining for non-food products overprice: ");
+        int nonFoodDaysLeft = this.readInt();
+
+        SalePriceCalculator.foodDiscount = foodDiscount;
+        SalePriceCalculator.foodDaysLeft = foodDaysLeft;
+        SalePriceCalculator.nonFoodDiscount = nonFoodDiscount;
+        SalePriceCalculator.nonFoodDaysLeft = nonFoodDaysLeft;
+    }
+
     public String readCommand() {
         System.out.print("Enter command: ");
         String input = "";

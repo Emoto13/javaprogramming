@@ -22,7 +22,7 @@ public class CommandHandler {
 
         Client client = this.clients.get(id);
         client.addToCart(product, quantity);
-        this.shop.getInventory().subtract(client.getCart().getProductRegistry());
+        this.shop.getInventory().remove(product, quantity);
     }
 
     public void removeFromCart(UUID id, Product product, int quantity) throws Exception {

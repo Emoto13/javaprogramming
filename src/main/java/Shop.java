@@ -54,7 +54,7 @@ class Shop {
         return this.cashRegistries;
     }
 
-    public ProductRegistry getSoldItems() {
+    public synchronized ProductRegistry getSoldItems() {
         ProductRegistry soldItems = new ProductRegistry();
         for (CashRegistry registry: this.cashRegistries) soldItems.addRegistry(registry.getSoldItems(), false);
         return soldItems;
@@ -76,7 +76,7 @@ class Shop {
         this.cashRegistries = registeries;
     }
 
-    public void assignCashiersToRegistries() {
+    public synchronized void assignCashiersToRegistries() {
         int i = 0;
         for (CashRegistry r : this.cashRegistries) {
             if (r.hasCashier()) continue;
@@ -115,7 +115,7 @@ class Shop {
     }
 
 
-    public CashRegistry freeCashRegistry(UUID id) throws IllegalArgumentException {
+    public synchronized CashRegistry freeCashRegistry(UUID id) throws IllegalArgumentException {
         for (CashRegistry registry: this.cashRegistries) {
             if (registry.getID().equals(id)) {
                 registry.setCashier(null);
@@ -125,7 +125,7 @@ class Shop {
         throw new IllegalArgumentException("No such registry");
     }
 
-    public void restartInactiveRegistries() {
+    public synchronized void restartInactiveRegistries() {
         for (CashRegistry registry: this.cashRegistries) {
             if (!registry.hasCashier()) {
                 Cashier cashier = this.getFreeCashier();
