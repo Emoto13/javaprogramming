@@ -118,7 +118,7 @@ class Shop {
     public synchronized CashRegistry freeCashRegistry(UUID id) throws IllegalArgumentException {
         for (CashRegistry registry: this.cashRegistries) {
             if (registry.getID().equals(id)) {
-                registry.setCashier(null);
+                registry.freeCashRegistry();
                 return registry;
             }
         }

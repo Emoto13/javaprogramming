@@ -1,0 +1,5 @@
+Receipt: dd2c184b-65d9-40b3-9492-617ffcd189f6
+Time: 2022-05-13T15:27:22.086555
+Cashier: 9c2cb9a9-32f3-403c-a167-722bd861067c, a
+Products: (id, name, quantity) 
+Product: a10ef54e-2e3c-4232-a3e8-50d41bed82f1, name, 2.00, Quantity: 2, Total: 4.00
